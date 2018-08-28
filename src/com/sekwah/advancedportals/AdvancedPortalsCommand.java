@@ -55,7 +55,6 @@ public class AdvancedPortalsCommand implements CommandExecutor, TabCompleter {
 
         if (sender.hasPermission("advancedportals.portal")) {
             if (args.length > 0) { switch (args[0].toLowerCase()) {
-                case "wand":
                 case "warp":
                     if (args.length == 2 && player.hasPermission("advancedportals.portal.warp")){
                         for (AdvancedPortal portal: Portal.portals){
@@ -296,6 +295,7 @@ public class AdvancedPortalsCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage("");
                     sender.sendMessage("\u00A7aExample command: \u00A7e/portal create name:test triggerId:portal");
                     break;
+                case "wand":
                 case "select":
                     // TODO finish the select command and the hit block to replace!
                     if (!player.hasMetadata("selectingPortal")) {
