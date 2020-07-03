@@ -1,8 +1,8 @@
-package com.sekwah.advancedportals.repository;
+package com.sekwah.advancedportals.core.repository;
 
-import com.sekwah.advancedportals.core.data.PlayerLocation;
-import com.sekwah.advancedportals.core.data.PortalLocation;
-import com.sekwah.advancedportals.core.connector.container.PlayerContainer;
+import com.sekwah.advancedportals.core.entities.PlayerLocation;
+import com.sekwah.advancedportals.core.entities.PortalLocation;
+import com.sekwah.advancedportals.core.entities.containers.PlayerContainer;
 
 import java.util.UUID;
 

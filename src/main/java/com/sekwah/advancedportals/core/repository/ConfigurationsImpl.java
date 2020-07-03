@@ -1,23 +1,22 @@
-package com.sekwah.advancedportals;
+package com.sekwah.advancedportals.core.repository;
 
 import com.google.inject.Singleton;
-import com.sekwah.advancedportals.core.config.Config;
-import com.sekwah.advancedportals.core.data.DataStorage;
+import com.sekwah.advancedportals.core.entities.Config;
+import com.sekwah.advancedportals.core.util.DataHandler;
 
 import java.util.HashMap;
 
 @Singleton
-public class ConfigRepositoryImpl implements ConfigRepository {
+public class ConfigurationsImpl implements IConfigurations {
 
     private HashMap<String, Config> configs;
     private Config config;
 
-    public ConfigRepositoryImpl() {
+    public ConfigurationsImpl() {
         configs = new HashMap<String,Config>();
     }
 
     public <T> T getValue(String output) {
-
         try {
             return (T) configs.get(output);
         } catch (ClassCastException ignored) {
@@ -47,7 +46,7 @@ public class ConfigRepositoryImpl implements ConfigRepository {
     }
 
     @Override
-    public void loadConfig(DataStorage dataStorage) {
+    public void loadConfig(DataHandler dataStorage) {
         this.config = dataStorage.loadJson(Config.class, "config.json");
     }
 

@@ -1,8 +1,10 @@
 package com.sekwah.advancedportals.core.registry;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.sekwah.advancedportals.core.AdvancedPortalsCore;
 import com.sekwah.advancedportals.core.api.effect.WarpEffect;
+import com.sekwah.advancedportals.core.util.InfoLogger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Map;
 /**
  * @author sekwah41
  */
+@Singleton
 public class WarpEffectRegistry {
 
 
@@ -18,7 +21,7 @@ public class WarpEffectRegistry {
     private Map<String, WarpEffect> soundEffects = new HashMap();
 
     @Inject
-    private AdvancedPortalsCore portalsCore;
+    InfoLogger infoLogger;
 
     /**
      * Register a new warp effect.
@@ -40,7 +43,7 @@ public class WarpEffectRegistry {
                 list = this.visualEffects;
                 break;
             default:
-                this.portalsCore.getInfoLogger().logWarning(type.toString()
+                infoLogger.logWarning(type.toString()
                         + " effect type not recognised");
                 return false;
         }
@@ -61,7 +64,7 @@ public class WarpEffectRegistry {
                 list = this.visualEffects;
                 break;
             default:
-                this.portalsCore.getInfoLogger().logWarning(type.toString()
+                infoLogger.logWarning(type.toString()
                         + " effect type not recognised");
                 return null;
         }
@@ -69,7 +72,7 @@ public class WarpEffectRegistry {
             return list.get(name);
         }
         else{
-            this.portalsCore.getInfoLogger().logWarning("No effect of type:"
+            infoLogger.logWarning("No effect of type:"
                     + type.toString() + " was registered with the name: " + name);
             return null;
         }

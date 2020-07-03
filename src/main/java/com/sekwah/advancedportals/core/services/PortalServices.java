@@ -1,11 +1,12 @@
 package com.sekwah.advancedportals.core.services;
 
 import com.google.common.collect.ImmutableList;
-import com.sekwah.advancedportals.repository.IPortalRepository;
+import com.sekwah.advancedportals.core.entities.PortalLocation;
+import com.sekwah.advancedportals.core.repository.IPortalRepository;
 import com.sekwah.advancedportals.core.api.portal.AdvancedPortal;
-import com.sekwah.advancedportals.core.data.DataTag;
-import com.sekwah.advancedportals.core.data.PlayerLocation;
-import com.sekwah.advancedportals.core.connector.container.PlayerContainer;
+import com.sekwah.advancedportals.core.entities.DataTag;
+import com.sekwah.advancedportals.core.entities.PlayerLocation;
+import com.sekwah.advancedportals.core.entities.containers.PlayerContainer;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -15,11 +16,11 @@ import java.util.Map;
  *
  * Based off the old manager with the data storage and handling moved to {@link IPortalRepository}
  *
- * Excluding the temp data like selections
+ * Note this class's purpose is to hold all of the logic and control what specific access a player has
+ * to the data, essentially to stop errors from occurring. It also is an access portal to the API so we can control
+ * specifically what they're able to do.
  */
 public final class PortalServices {
-
-
 
     public void loadPortals() {
 
@@ -47,5 +48,14 @@ public final class PortalServices {
 
     public boolean removePlayerSelection(PlayerContainer player) {
         return false;
+    }
+
+    public void playerSelectorActivate(PlayerContainer player, PortalLocation blockLoc, boolean leftClick) {
+    }
+
+    public void activateCooldown(PlayerContainer player) {
+    }
+
+    public void playerLeave(PlayerContainer player) {
     }
 }

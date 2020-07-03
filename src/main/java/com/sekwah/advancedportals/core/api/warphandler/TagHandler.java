@@ -1,6 +1,6 @@
 package com.sekwah.advancedportals.core.api.warphandler;
 
-import com.sekwah.advancedportals.core.connector.container.PlayerContainer;
+import com.sekwah.advancedportals.core.entities.containers.PlayerContainer;
 
 /**
  * If a tag can be used for any of them then either make it cast the target or if it doesnt need a target

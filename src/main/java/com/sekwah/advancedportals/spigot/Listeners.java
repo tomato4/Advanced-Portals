@@ -1,8 +1,9 @@
 package com.sekwah.advancedportals.spigot;
 
+import com.google.inject.Inject;
 import com.sekwah.advancedportals.core.AdvancedPortalsCore;
 import com.sekwah.advancedportals.core.CoreListeners;
-import com.sekwah.advancedportals.core.data.PortalLocation;
+import com.sekwah.advancedportals.core.entities.PortalLocation;
 import com.sekwah.advancedportals.spigot.coreconnector.container.SpigotPlayerContainer;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class Listeners implements Listener {
 
-    private CoreListeners coreListeners = AdvancedPortalsCore.getInstance().getCoreListeners();
+    @Inject
+    private CoreListeners coreListeners;
 
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent event) {

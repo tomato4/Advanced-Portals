@@ -1,24 +1,29 @@
-package com.sekwah.advancedportals.core.data;
+package com.sekwah.advancedportals.core.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.sekwah.advancedportals.core.AdvancedPortalsCore;
 
 import java.io.*;
 import java.lang.reflect.Type;
 
-public class DataStorage {
 
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+@Singleton
+public class DataHandler {
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    private File dataFolder;
-
+    //TODO check if this is going to error out, not sure it will let me exec this pending on
+    //what order it's injected.
+    private final File dataFolder;
     @Inject
-    private AdvancedPortalsCore portalsCore;
+    InfoLogger logger;
 
-    public DataStorage(File dataStorageLoc) {
+
+    public DataHandler(File dataStorageLoc) {
         this.dataFolder = dataStorageLoc;
+        copyDefaultFile("lang/en_GB.lang", false);
     }
 
     /**
@@ -102,15 +107,15 @@ public class DataStorage {
                 outStream.close();
             } catch (NullPointerException e) {
                 e.printStackTrace();
-                this.portalsCore.getInfoLogger().logWarning("Could not load " + fileLoc + ". The file does" +
+                logger.logWarning("Could not load " + fileLoc + ". The file does" +
                         "not exist or there has been an error reading the file.");
                 return false;
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                this.portalsCore.getInfoLogger().logWarning("Could not create " + fileLoc);
+                logger.logWarning("Could not create " + fileLoc);
             } catch (IOException e) {
                 e.printStackTrace();
-                this.portalsCore.getInfoLogger().logWarning("File error reading " + fileLoc);
+                logger.logWarning("File error reading " + fileLoc);
             }
         }
         return true;
@@ -137,7 +142,7 @@ public class DataStorage {
                 return this.getClass().getClassLoader().getResourceAsStream(location);
             } catch (NullPointerException e) {
                 e.printStackTrace();
-                this.portalsCore.getInfoLogger().logWarning("Could not load " + location + ". The file does" +
+                logger.logWarning("Could not load " + location + ". The file does" +
                         "not exist or there has been an error reading the file.");
                 return null;
             }

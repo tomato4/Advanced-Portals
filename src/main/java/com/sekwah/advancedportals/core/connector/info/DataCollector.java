@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Gets info from the specific implementation
+ * Needs to be renamed
  */
 public interface DataCollector {
 

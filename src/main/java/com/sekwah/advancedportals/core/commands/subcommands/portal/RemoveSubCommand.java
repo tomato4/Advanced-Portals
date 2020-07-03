@@ -1,11 +1,13 @@
 package com.sekwah.advancedportals.core.commands.subcommands.portal;
 
+import com.google.inject.Inject;
 import com.sekwah.advancedportals.core.AdvancedPortalsCore;
 import com.sekwah.advancedportals.core.api.commands.SubCommand;
 import com.sekwah.advancedportals.core.api.portal.AdvancedPortal;
-import com.sekwah.advancedportals.core.util.Lang;
-import com.sekwah.advancedportals.core.connector.container.CommandSenderContainer;
-import com.sekwah.advancedportals.core.connector.container.PlayerContainer;
+import com.sekwah.advancedportals.core.repository.ILangRepository;
+import com.sekwah.advancedportals.core.services.PortalServices;
+import com.sekwah.advancedportals.core.entities.containers.CommandSenderContainer;
+import com.sekwah.advancedportals.core.entities.containers.PlayerContainer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,29 +16,36 @@ import java.util.Map;
 
 public class RemoveSubCommand implements SubCommand {
 
+    @Inject
+    private PortalServices portalServices;
+    @Inject
+    private ILangRepository langRepository;
+
     @Override
     public void onCommand(CommandSenderContainer sender, String[] args) {
         if(args.length > 1) {
-            if(AdvancedPortalsCore.getPortalServices().removePortal(args[1], sender.getPlayerContainer())) {
-                sender.sendMessage(Lang.translateColor("messageprefix.positive") + Lang.translateColor("command.remove.complete"));
+            boolean portalStatus = portalServices.removePortal(args[1], sender.getPlayerContainer());
+
+            if(portalStatus) {
+                sender.sendMessage(langRepository.translateColor("messageprefix.positive") + langRepository.translateColor("command.remove.complete"));
             }
             else {
-                sender.sendMessage(Lang.translateColor("messageprefix.negative")
-                        + Lang.translateColor("command.remove.error"));
+                sender.sendMessage(langRepository.translateColor("messageprefix.negative")
+                        + langRepository.translateColor("command.remove.error"));
             }
         }
         else {
             PlayerContainer player = sender.getPlayerContainer();
             if(player == null) {
-                sender.sendMessage(Lang.translate("command.remove.noname"));
+                sender.sendMessage(langRepository.translate("command.remove.noname"));
             }
             else {
                 if(AdvancedPortalsCore.getPortalServices().removePlayerSelection(player)) {
 
                 }
                 else {
-                    sender.sendMessage(Lang.translateColor("messageprefix.negative")
-                            + Lang.translateColor("command.remove.error"));
+                    sender.sendMessage(langRepository.translateColor("messageprefix.negative")
+                            + langRepository.translateColor("command.remove.error"));
                 }
 
             }
@@ -51,7 +60,7 @@ public class RemoveSubCommand implements SubCommand {
     @Override
     public List<String> onTabComplete(CommandSenderContainer sender, String[] args) {
         List<String> portalNames = new ArrayList<>();
-        for(Map.Entry<String, AdvancedPortal> portal : AdvancedPortalsCore.getPortalServices().getPortals()) {
+        for(Map.Entry<String, AdvancedPortal> portal : portalServices.getPortals()) {
             portalNames.add(portal.getKey());
         }
         Collections.sort(portalNames);
@@ -60,11 +69,11 @@ public class RemoveSubCommand implements SubCommand {
 
     @Override
     public String getBasicHelpText() {
-        return Lang.translate("command.create.help");
+        return langRepository.translate("command.create.help");
     }
 
     @Override
     public String getDetailedHelpText() {
-        return Lang.translate("command.create.detailedhelp");
+        return langRepository.translate("command.create.detailedhelp");
     }
 }

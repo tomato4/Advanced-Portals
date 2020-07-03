@@ -25,7 +25,8 @@ public class SubCommandRegistry {
      */
     protected ArrayList<String> subCommands = new ArrayList<>();
 
-    private InfoLogger infoLogger = AdvancedPortalsCore.getInstance().getInfoLogger();
+
+  //  private InfoLogger infoLogger = AdvancedPortalsCore.getInstance().getInfoLogger();
 
     /**
      * @param arg argument needed to activate
@@ -35,12 +36,12 @@ public class SubCommandRegistry {
     public boolean registerSubCommand(String arg, SubCommand subCommand) {
 
         if (subCommand == null) {
-            this.infoLogger.logWarning("The subcommand '" + arg + "' cannot be null.");
+          infoLogger.logWarning("The subcommand '" + arg + "' cannot be null.");
             return false;
         }
 
         if(this.subCommandMap.containsKey(arg)){
-            this.infoLogger.logWarning("The subcommand '" + arg + "' already exists.");
+            infoLogger.logWarning("The subcommand '" + arg + "' already exists.");
             return false;
         }
 

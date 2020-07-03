@@ -1,4 +1,4 @@
-package com.sekwah.advancedportals.core.connector.container;
+package com.sekwah.advancedportals.core.entities.containers;
 
 public interface CommandSenderContainer {
 

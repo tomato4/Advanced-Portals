@@ -1,6 +1,6 @@
 package com.sekwah.advancedportals.core.connector.command;
 
-import com.sekwah.advancedportals.core.commands.CommandTemplate;
+import com.sekwah.advancedportals.core.registry.CommandTemplate;
 
 public interface CommandRegister {
 

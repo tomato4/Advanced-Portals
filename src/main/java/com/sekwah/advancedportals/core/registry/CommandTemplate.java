@@ -1,6 +1,6 @@
-package com.sekwah.advancedportals.core.commands;
+package com.sekwah.advancedportals.core.registry;
 
-import com.sekwah.advancedportals.core.connector.container.CommandSenderContainer;
+import com.sekwah.advancedportals.core.entities.containers.CommandSenderContainer;
 
 import java.util.List;
 

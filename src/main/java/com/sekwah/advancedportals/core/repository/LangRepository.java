@@ -1,9 +1,11 @@
-package com.sekwah.advancedportals.core.util;
+package com.sekwah.advancedportals.core.repository;
 
+import com.google.inject.Singleton;
 import com.sekwah.advancedportals.core.AdvancedPortalsCore;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -18,60 +20,64 @@ import java.util.Scanner;
  *         TODO add a loaddefault where it only loads from the plugins version of the data rather than paying attention to any
  *         possible changed versions in the lang folder.
  */
-public class Lang {
+@Singleton
+public class LangRepository implements ILangRepository {
 
-    private static final Lang instance = new Lang();
     private final HashMap<String, String> languageMap = new HashMap<>();
-    //private final String DEFAULT_LANG = "en_GB";
+    private String selectedLang = "en_GB";
 
-    /*public Lang() {
-        injectTranslations(this, DEFAULT_LANG);
-    }*/
+    public static final String version = "1.0.0";
+    public static final String lastTranslationUpdate = "1.0.0";
 
-    public static void loadLanguage(String fileName) {
-        instance.injectTranslations(instance, fileName);
+    @Override
+    public  String translate(String s) {
+        return languageMap.getOrDefault(s, s);
     }
 
-    public static String translate(String s) {
-        if (instance.languageMap.containsKey(s)) {
-            return instance.languageMap.get(s);
-        } else {
-            return s;
-        }
-    }
-
-    public static String translateInsertVariables(String s, Object... args) {
-        String translation = instance.translate(s);
+    @Override
+    public String translate(String key, Object... args) {
+        String translation = translate(key);
         for (int i = 1; i <= args.length; i++) {
             translation = translation.replaceAll("%" + i + "\\$s", args[i-1].toString());
         }
         return translation;
     }
 
-    public static String translateInsertVariablesColor(String s, Object... args) {
-        String translation = instance.translateColor(s);
+    public final String getVersion() {
+        return version;
+    }
+    public final String getLastTranslationUpdate() {
+        return lastTranslationUpdate;
+    }
+
+
+    @Override
+    public  String translateInsertVariablesColor(String s, Object... args) {
+        String translation = translateColor(s);
         for (int i = 1; i <= args.length; i++) {
             translation = translation.replaceAll("%" + i + "\\$s", args[i-1].toString());
         }
         return translation;
     }
 
-    public static String translateColor(String s) {
-        String translation = instance.translate(s);
+    @Override
+    public  String translateColor(String s) {
+        String translation = translate(s);
         translation = translation.replaceAll("\\\\u00A7", "\u00A7");
         return translation;
     }
 
-    private void injectTranslations(Lang lang, String fileName) {
+    @Override
+    public void loadTranslations(String fileName) {
         try {
             //URL url = lang.getClass().getClassLoader().getResource("lang/" + fileName + ".lang");
             //System.out.println(url);
             //Map<String, String> newLangMap = lang.parseLang(url.openStream());
             InputStream stream = AdvancedPortalsCore.getInstance().getDataStorage().loadResource("lang/" + fileName + ".lang");
             if (stream != null) {
-                Map<String, String> newLangMap = lang.parseLang(stream);
+                Map<String, String> newLangMap = parseLang(stream);
                 if (newLangMap != null) {
-                    lang.languageMap.putAll(newLangMap);
+                    languageMap.putAll(newLangMap);
                 }
             }
         } catch (NullPointerException e) {
@@ -79,6 +85,11 @@ public class Lang {
             AdvancedPortalsCore.getInstance().getInfoLogger().logWarning("Could not load " + fileName + ".lang The file does" +
                     "not exist or there has been an error reading the file. Canceled loading language file.");
         }
+    }
+
+    @Override
+    public String getLang() {
+        return selectedLang;
     }
 
     private Map<String, String> parseLang(InputStream inputStream) {

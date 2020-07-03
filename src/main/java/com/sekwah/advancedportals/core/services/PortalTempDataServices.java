@@ -1,8 +1,8 @@
 package com.sekwah.advancedportals.core.services;
 
-import com.sekwah.advancedportals.core.data.PlayerTempData;
-import com.sekwah.advancedportals.core.data.PortalLocation;
-import com.sekwah.advancedportals.core.connector.container.PlayerContainer;
+import com.sekwah.advancedportals.core.entities.PlayerTempData;
+import com.sekwah.advancedportals.core.entities.PortalLocation;
+import com.sekwah.advancedportals.core.entities.containers.PlayerContainer;
 
 import java.util.HashMap;
 import java.util.Map;

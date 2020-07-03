@@ -1,7 +1,5 @@
-package com.sekwah.advancedportals.repository;
+package com.sekwah.advancedportals.core.repository;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableMap;
 import com.sekwah.advancedportals.core.api.destination.Destination;
 
@@ -12,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @Singleton
 public class DestinationRepository implements IDestinationRepository<Destination> {

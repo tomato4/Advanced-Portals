@@ -1,4 +1,4 @@
-package com.sekwah.advancedportals.repository;
+package com.sekwah.advancedportals.core.repository;
 
 import com.google.gson.Gson;
 

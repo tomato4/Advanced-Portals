@@ -1,43 +1,42 @@
 package com.sekwah.advancedportals.core;
 
 import com.google.inject.Inject;
+import com.sekwah.advancedportals.core.repository.IConfigurations;
+import com.sekwah.advancedportals.core.repository.ILangRepository;
 import com.sekwah.advancedportals.core.services.PortalServices;
 import com.sekwah.advancedportals.core.services.PortalTempDataServices;
-import com.sekwah.advancedportals.core.data.PlayerLocation;
-import com.sekwah.advancedportals.core.data.PortalLocation;
-import com.sekwah.advancedportals.core.util.Lang;
-import com.sekwah.advancedportals.core.connector.container.PlayerContainer;
-import com.sekwah.advancedportals.core.connector.container.WorldContainer;
+import com.sekwah.advancedportals.core.entities.PlayerLocation;
+import com.sekwah.advancedportals.core.entities.PortalLocation;
+import com.sekwah.advancedportals.core.entities.containers.PlayerContainer;
+import com.sekwah.advancedportals.core.entities.containers.WorldContainer;
+
 
 public class CoreListeners {
-
     @Inject
-    private PortalTempDataServices portalTempDataServices;
-
+    ILangRepository langRepository;
+    @Inject
+    IConfigurations config;
     @Inject
     private PortalServices portalServices;
 
-    @Inject
-    private AdvancedPortalsCore portalsCore;
-
     public void playerJoin(PlayerContainer player) {
-        this.portalTempDataServices.activateCooldown(player);
+        portalServices.activateCooldown(player);
         if(player.isOp()) {
-            if(!Lang.translate("translatedata.lastchange").equals(AdvancedPortalsCore.lastTranslationUpdate)) {
-                player.sendMessage(Lang.translateColor("messageprefix.negative")
-                        + Lang.translateInsertVariablesColor("translatedata.translationsoutdated", AdvancedPortalsCore.getTranslationName()));
-                player.sendMessage(Lang.translateColor("messageprefix.negative")
-                        + Lang.translateColor("translatedata.replacecommand"));
+            if(!langRepository.translate("translatedata.lastchange").equals(AdvancedPortalsCore.lastTranslationUpdate)) {
+                player.sendMessage(langRepository.translateColor("messageprefix.negative")
+                        + langRepository.translateInsertVariablesColor("translatedata.translationsoutdated", langRepository.getLang()));
+                player.sendMessage(langRepository.translateColor("messageprefix.negative")
+                        + langRepository.translateColor("translatedata.replacecommand"));
             }
         }
     }
 
     public void teleportEvent(PlayerContainer player) {
-        this.portalTempDataServices.activateCooldown(player);
+        portalServices.activateCooldown(player);
     }
 
     public void playerLeave(PlayerContainer player) {
-        this.portalTempDataServices.playerLeave(player);
+        portalServices.playerLeave(player);
     }
 
     /**
@@ -122,9 +121,9 @@ public class CoreListeners {
     public boolean playerInteractWithBlock(PlayerContainer player, String materialName, String itemName,
                                            PortalLocation blockLoc, boolean leftClick) {
         if(itemName != null && (player.isOp() || player.hasPermission("advancedportals.createportal")) &&
-                materialName.equalsIgnoreCase(this.portalsCore.getConfigRepo().getSelectorMaterial())
-                && (!this.portalsCore.getConfigRepo().getUseOnlySpecialAxe() || itemName.equals("\u00A7ePortal Region Selector"))) {
-            this.portalTempDataServices.playerSelectorActivate(player, blockLoc, leftClick);
+                materialName.equalsIgnoreCase(config.getSelectorMaterial())
+                && (!config.getUseOnlySpecialAxe() || itemName.equals("\u00A7ePortal Region Selector"))) {
+            portalServices.playerSelectorActivate(player, blockLoc, leftClick);
             return false;
         }
         else if(itemName != null && leftClick && itemName.equals("\u00A75Portal Block Placer") && player.hasPermission("advancedportals.build")) {

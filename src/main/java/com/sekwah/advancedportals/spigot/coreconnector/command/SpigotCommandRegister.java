@@ -1,6 +1,6 @@
 package com.sekwah.advancedportals.spigot.coreconnector.command;
 
-import com.sekwah.advancedportals.core.commands.CommandTemplate;
+import com.sekwah.advancedportals.core.registry.CommandTemplate;
 import com.sekwah.advancedportals.core.connector.command.CommandRegister;
 import com.sekwah.advancedportals.spigot.AdvancedPortalsPlugin;
 

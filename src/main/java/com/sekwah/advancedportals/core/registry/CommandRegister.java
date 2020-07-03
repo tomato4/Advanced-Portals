@@ -1,21 +1,24 @@
-package com.sekwah.advancedportals.core.commands;
+package com.sekwah.advancedportals.core.registry;
 
+import com.google.inject.Singleton;
 import com.sekwah.advancedportals.core.api.commands.SubCommand;
-import com.sekwah.advancedportals.core.registry.SubCommandRegistry;
-import com.sekwah.advancedportals.core.util.Lang;
-import com.sekwah.advancedportals.core.connector.container.CommandSenderContainer;
+import com.sekwah.advancedportals.core.entities.containers.CommandSenderContainer;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CommandWithSubCommands implements CommandTemplate {
+
+//TODO This needs to be converted to the new system, however the commands are
+//very broken right now.
+@Singleton
+public class CommandRegister implements CommandTemplate {
 
     private final SubCommandRegistry subCommandRegistry;
 
     private final int subCommandsPerPage = 7;
 
-    public CommandWithSubCommands() {
+    public CommandRegister() {
         this.subCommandRegistry = new SubCommandRegistry();
     }
 

@@ -1,4 +1,4 @@
-package com.sekwah.advancedportals.core.data;
+package com.sekwah.advancedportals.core.entities;
 
 public class PlayerTempData {
 
