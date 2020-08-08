@@ -8,7 +8,6 @@ import com.sekwah.advancedportals.core.config.RepositoryModule;
 import com.sekwah.advancedportals.core.connector.info.DataCollector;
 import com.sekwah.advancedportals.core.util.DataHandler;
 import com.sekwah.advancedportals.core.util.TagRegistry;
-import com.sekwah.advancedportals.core.registry.WarpEffectRegistry;
 import com.sekwah.advancedportals.core.repository.ILangRepository;
 import com.sekwah.advancedportals.core.util.InfoLogger;
 
@@ -22,7 +21,6 @@ public class AdvancedPortalsCore {
     public String test;
     private final Injector injector = Guice.createInjector(new RepositoryModule());
     private final ILangRepository langRepository;
-    private WarpEffectRegistry warpEffectRegistry = injector.getInstance(WarpEffectRegistry.class);
     private TagRegistry<AdvancedPortal> portalTagRegistry;
     private TagRegistry<Destination> destiTagRegistry;
     private InfoLogger infoLogger;
@@ -90,8 +88,6 @@ public class AdvancedPortalsCore {
     private void onEnable() {
         this.portalTagRegistry = new TagRegistry<>();
         this.destiTagRegistry = new TagRegistry<>();
-        //DataaStore copy default file moved to initialization
-
     }
 
     /**

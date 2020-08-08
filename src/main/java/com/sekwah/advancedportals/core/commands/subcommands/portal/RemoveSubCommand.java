@@ -40,7 +40,7 @@ public class RemoveSubCommand implements SubCommand {
                 sender.sendMessage(langRepository.translate("command.remove.noname"));
             }
             else {
-                if(AdvancedPortalsCore.getPortalServices().removePlayerSelection(player)) {
+                if(portalServices.removePlayerSelection(player)) {
 
                 }
                 else {

@@ -2,6 +2,7 @@ package com.sekwah.advancedportals.core.registry;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
+import com.sekwah.advancedportals.core.api.commands.SubCommand;
 
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
@@ -10,7 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class RegisterBuilder<T extends CommandHandler> {
+public class RegisterBuilder<T extends SubCommand> {
     public static RegisterBuilder newBuilder() {
         return new RegisterBuilder();
     }
@@ -35,7 +36,7 @@ public class RegisterBuilder<T extends CommandHandler> {
     }
 
     //TODO I don't know if we want to use this as it is marked as Unstable.
-    public Registrar<T> build() {
+    public CommandRegister<T> build() {
         // Table<String, String, T> commandMap = HashBasedTable.create();
         Map<Cmd, T> commandMap = new HashMap<>();
         ImmutableSet<ClassPath.ClassInfo> classInfo;
@@ -83,7 +84,7 @@ public class RegisterBuilder<T extends CommandHandler> {
                         e.printStackTrace();
                     }
                 });
-        return new Registrar<>(allowPermissionInheritance, commandMap);
+        return new CommandRegister<T>(allowPermissionInheritance, commandMap);
     }
 
 

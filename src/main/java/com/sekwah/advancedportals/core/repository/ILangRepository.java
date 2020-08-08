@@ -1,7 +1,7 @@
 package com.sekwah.advancedportals.core.repository;
 
 public interface ILangRepository {
-    String translate(String s);
+     String  translate(String s);
 
     String translate(String key, Object... args);
 

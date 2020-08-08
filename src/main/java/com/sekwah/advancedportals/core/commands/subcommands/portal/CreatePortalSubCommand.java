@@ -1,12 +1,16 @@
 package com.sekwah.advancedportals.core.commands.subcommands.portal;
 
+import com.google.inject.Inject;
 import com.sekwah.advancedportals.core.AdvancedPortalsCore;
 import com.sekwah.advancedportals.core.api.commands.SubCommand;
 import com.sekwah.advancedportals.core.api.portal.AdvancedPortal;
-import com.sekwah.advancedportals.core.data.DataTag;
-import com.sekwah.advancedportals.core.util.Lang;
-import com.sekwah.advancedportals.core.connector.container.CommandSenderContainer;
-import com.sekwah.advancedportals.core.connector.container.PlayerContainer;
+
+import com.sekwah.advancedportals.core.entities.DataTag;
+import com.sekwah.advancedportals.core.entities.containers.CommandSenderContainer;
+import com.sekwah.advancedportals.core.entities.containers.PlayerContainer;
+import com.sekwah.advancedportals.core.repository.ILangRepository;
+import com.sekwah.advancedportals.core.repository.IPortalRepository;
+import com.sekwah.advancedportals.core.services.PortalServices;
 import com.sekwah.advancedportals.core.util.TagReader;
 
 import java.util.ArrayList;
@@ -14,31 +18,43 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CreatePortalSubCommand implements SubCommand {
+    @Inject
+    private ILangRepository langRepository;
+    @Inject
+    private PortalServices portalServices;
 
     @Override
     public void onCommand(CommandSenderContainer sender, String[] args) {
         if(args.length > 1) {
             PlayerContainer player = sender.getPlayerContainer();
             if(player == null) {
-                sender.sendMessage(Lang.translateColor("messageprefix.negative") + Lang.translate("command.create.console"));
+                sender.sendMessage(langRepository.translateColor("messageprefix.negative") + langRepository.translate("command.create.console"));
                 return;
             }
             ArrayList<DataTag> portalTags = TagReader.getTagsFromArgs(args);
 
-            AdvancedPortal portal = AdvancedPortalsCore.getPortalServices().createPortal(args[1], player, portalTags);
+            AdvancedPortal portal = portalServices.createPortal(args[1], player, portalTags);
             if(portal != null) {
-                sender.sendMessage(Lang.translateColor("messageprefix.positive") + Lang.translateColor("command.create.complete"));
-                sender.sendMessage(Lang.translateColor("command.create.tags"));
+                sender.sendMessage(langRepository.translateColor("messageprefix.positive") + langRepository.translateColor("command.create.complete"));
+                sender.sendMessage(langRepository.translateColor("command.create.tags"));
                 sender.sendMessage("\u00A7a" + "triggerBlock\u00A77:\u00A7e" + Arrays.toString(portal.getTriggerBlocks()));
                 for (DataTag tag: portal.getArgs()) {
                     sender.sendMessage("\u00A7a" + tag.NAME + "\u00A77:\u00A7e" + tag.VALUE);
                 }
             }
-            sender.sendMessage(Lang.translateColor("messageprefix.negative") + Lang.translateColor("command.create.error"));
+            sender.sendMessage(langRepository.translateColor("messageprefix.negative") + langRepository.translateColor("command.create.error"));
         }
         else {
-            sender.sendMessage(Lang.translateColor("messageprefix.positive") + Lang.translate("command.error.noname"));
+            sender.sendMessage(langRepository.translateColor("messageprefix.positive") + langRepository.translate("command.error.noname"));
         }
+    }
+
+    protected String getTag(String arg) {
+        int splitLoc = arg.indexOf(":");
+        if(splitLoc != -1) {
+            return arg.substring(0,splitLoc);
+        }
+        return null;
     }
 
     @Override
@@ -53,11 +69,11 @@ public class CreatePortalSubCommand implements SubCommand {
 
     @Override
     public String getBasicHelpText() {
-        return Lang.translate("command.create.help");
+        return langRepository.translate("command.create.help");
     }
 
     @Override
     public String getDetailedHelpText() {
-        return Lang.translate("command.create.detailedhelp");
+        return langRepository.translate("command.create.detailedhelp");
     }
 }

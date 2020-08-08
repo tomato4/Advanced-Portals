@@ -7,12 +7,12 @@ import com.sekwah.advancedportals.core.util.DataHandler;
 import java.util.HashMap;
 
 @Singleton
-public class ConfigurationsImpl implements IConfigurations {
+public class Configurations implements IConfigurations {
 
     private HashMap<String, Config> configs;
     private Config config;
 
-    public ConfigurationsImpl() {
+    public Configurations() {
         configs = new HashMap<String,Config>();
     }
 

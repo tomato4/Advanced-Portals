@@ -1,7 +1,10 @@
 package com.sekwah.advancedportals.core.repository;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.sekwah.advancedportals.core.AdvancedPortalsCore;
+import com.sekwah.advancedportals.core.util.DataHandler;
+import com.sekwah.advancedportals.core.util.InfoLogger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +31,11 @@ public class LangRepository implements ILangRepository {
 
     public static final String version = "1.0.0";
     public static final String lastTranslationUpdate = "1.0.0";
+
+    @Inject
+    private DataHandler dataHandler;
+    @Inject
+    private InfoLogger infoLogger;
 
     @Override
     public  String translate(String s) {
@@ -73,7 +81,7 @@ public class LangRepository implements ILangRepository {
             //URL url = lang.getClass().getClassLoader().getResource("lang/" + fileName + ".lang");
             //System.out.println(url);
             //Map<String, String> newLangMap = lang.parseLang(url.openStream());
-            InputStream stream = AdvancedPortalsCore.getInstance().getDataStorage().loadResource("lang/" + fileName + ".lang");
+            InputStream stream = dataHandler.loadResource("lang/" + fileName + ".lang");
             if (stream != null) {
                 Map<String, String> newLangMap = parseLang(stream);
                 if (newLangMap != null) {
@@ -82,7 +90,7 @@ public class LangRepository implements ILangRepository {
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
-            AdvancedPortalsCore.getInstance().getInfoLogger().logWarning("Could not load " + fileName + ".lang The file does" +
+            infoLogger.logWarning("Could not load " + fileName + ".lang The file does" +
                     "not exist or there has been an error reading the file. Canceled loading language file.");
         }
     }

@@ -1,4 +1,4 @@
-package com.sekwah.advancedportals.core.registry;
+package com.sekwah.advancedportals.core.data;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
