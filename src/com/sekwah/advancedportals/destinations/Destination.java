@@ -138,19 +138,19 @@ public class Destination {
                     player.sendMessage(PluginMessages.customPrefixFail + "\u00A7a You have been warped to \u00A7e" + name.replaceAll("_", " ") + "\u00A7a.");
                     player.sendMessage("");
                 } else if (PortalMessagesDisplay == 2) {
-                    plugin.compat.sendActionBarMessage("\u00A7aYou have warped to \u00A7e" + name.replaceAll("_", " ") + "\u00A7a.", player);
+                    plugin.compat.sendActionBarMessage("\u00A7eByl jsi teleportovan na \u00A7l" + name.replaceAll("_", " ") + "\u00A7r\u00A7e!", player);
                     /**plugin.nmsAccess.sendActionBarMessage("[{text:\"You have warped to \",color:green},{text:\"" + config.getConfig().getString(Portal.portals[portalId].portalName + ".destination").replaceAll("_", " ")
                      + "\",color:yellow},{\"text\":\".\",color:green}]", player);*/
                 }
 
                 return true;
             } else {
-                player.sendMessage(PluginMessages.customPrefixFail + "\u00A7c The destination you are trying to warp to seems to be linked to a world that doesn't exist!");
+                player.sendMessage(PluginMessages.customPrefixFail + "\u00A7cThe destination you are trying to warp to seems to be linked to a world that doesn't exist!");
                 plugin.getLogger().log(Level.SEVERE, "The destination '" + name + "' is linked to the world "
                         + config.getConfig().getString(name + ".world") + " which doesnt seem to exist any more!");
             }
         } else {
-            player.sendMessage(PluginMessages.customPrefix + "\u00A7c The destination you are currently attempting to warp to doesnt exist!");
+            player.sendMessage(PluginMessages.customPrefix + "\u00A7eDestinace nebyla nalezena!");
             plugin.getLogger().log(Level.SEVERE, "The destination '" + name + "' has just had a warp "
                     + "attempt and either the data is corrupt or that destination doesn't exist!");
         }

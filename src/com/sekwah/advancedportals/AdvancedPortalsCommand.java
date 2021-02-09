@@ -482,7 +482,7 @@ public class AdvancedPortalsCommand implements CommandExecutor, TabCompleter {
                     Portal.loadPortals();
                     break;
                 case "list" :
-                    String message = PluginMessages.customPrefix + " \u00A77Portals \u00A7c:\u00A7a";
+                    String message = PluginMessages.customPrefix + "\u00A7eSeznam portalu:\u00A7r\u00A7f\u00A7l";
                     LinkedList<String> portals = new LinkedList<>();
                     for (AdvancedPortal portal : Portal.portals) {
                         portals.add(portal.getName());
